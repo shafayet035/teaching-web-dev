@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+
+        <style>
+            * {
+                padding: 0;
+                margin: 0;
+                box-sizing: border-box;
+            }
+
+            #todoApp {
+                max-width: 600px;
+                width: 95%;
+                margin: 0 auto;
+                padding: 0.5rem 0;
+            }
+
+            .todo-item.completed .todo-text{
+               text-decoration: line-through;
+               opacity: 0.4;
+            }
+
+            .todo-top {
+                display: flex;
+                justify-content: center;
+            }
+
+            .todo-top input {
+                padding: 8px;
+                width: 100%;
+                border-radius: 0;
+            }
+
+            .todo-top button {
+                min-width: 80px;
+                background-color: rgb(1, 125, 40);
+                color: white;
+                border: none;
+            }
+
+            #todoList {
+                list-style: none;
+                padding: 2rem 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 16px;
+            }
+
+            #todoList li {
+                display: flex;
+                gap: 4px;
+                width: 100%;
+                align-items: center;
+                background-color: #e4fff9;
+                padding: 8px;
+                border-radius: 8px;
+            }
+
+            .todo-item button {
+                margin-left: auto;
+                font-size: 10px;
+                background-color: #00bbae;
+                color: white;
+                border: none;
+                padding: 4px;
+                border-radius: 2px;
+                text-transform: capitalize;
+                cursor: pointer;
+            }
+
+            .todo-item.completed button {
+                background-color: red;
+            }
+            h1 {
+                text-align: center;
+                padding: 2rem 0;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1>উড়ন্ত Todo</h1>
+        <div id="todoApp">
+            <div class="todo-top">
+                <input type="text" id="todoInput" placeholder="Enter something!" />
+                <button id="todoAddBtn">Add</button>
+            </div>
+            <ul id="todoList"></ul>
+        </div>
+
+        <script src="./script.js"></script>
+    </body>
+</html>

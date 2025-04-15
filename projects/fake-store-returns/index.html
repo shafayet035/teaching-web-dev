@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./spinner.css" />
+    <title>Fake Store Returns</title>
+
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana,
+          sans-serif;
+        padding: 4rem;
+      }
+      .products-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+      }
+      .product {
+        border: 1px solid #f4f4f4;
+        padding: 20px;
+        box-shadow: 0px 5px 30px rgba(0, 0, 0, 0.05);
+      }
+      .product img {
+        width: 100%;
+      }
+
+      .pb-3 {
+        padding-bottom: 16px;
+      }
+
+      .search-form {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2rem;
+      }
+
+      .search-form input {
+        width: 100%;
+        padding: 10px;
+        height: 40px;
+      }
+      .search-form button {
+        padding: 10px 20px;
+        height: 40px;
+      }
+      #spinner {
+        display: none;
+        margin: 0 auto;
+      }
+      #spinner.active {
+        display: block;
+      }
+
+      #tab-content {
+        display: none;
+      }
+      #tab-content.active {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <div>
+        <button id="tab-btn" data-key="profile">Profile</button>
+        <button id="tab-btn" data-key="account">Account</button>
+      </div>
+      <div>
+        <div class="active" id="tab-content" data-key="profile">Profile</div>
+        <div id="tab-content" data-key="account">Account</div>
+      </div>
+    </div>
+
+    <script>
+      const btns = document.querySelectorAll('#tab-btn');
+      const tabs = document.querySelectorAll('#tab-content');
+
+      btns.forEach((btn) => {
+        btn.addEventListener('click', (event) => {
+          tabs.forEach((tab) => {
+            if (tab.dataset.key === event.target.dataset.key) {
+              tab.classList.add('active');
+            } else {
+              tab.classList.remove('active');
+            }
+          });
+        });
+      });
+    </script>
+
+    <div class="search-form">
+      <input id="searchInput" placeholder="Please search something" />
+      <button id="searchBtn">Search</button>
+    </div>
+
+    <div class="search-form">
+      <input id="searchInputClient" placeholder="Client search something" />
+      <button id="searchBtnClient">Search</button>
+    </div>
+
+    <div id="spinner" class="lds-ring">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+
+    <div class="products-container" id="products-container"></div>
+
+    <script>
+      const prdsCon = document.querySelector('#products-container');
+      const searchBtn = document.querySelector('#searchBtn');
+      const searchInput = document.querySelector('#searchInput');
+
+      const searchBtnClient = document.querySelector('#searchBtnClient');
+      const searchInputClient = document.querySelector('#searchInputClient');
+
+      const spinner = document.querySelector('#spinner');
+
+      let productArray = [];
+
+      searchBtnClient.addEventListener('click', () => {
+        const inputValue = searchInputClient.value;
+
+        let filteredProducts = [];
+
+        for (let i = 0; i < productArray.length; i++) {
+          if (productArray[i].title.toLowerCase().includes(inputValue.toLowerCase())) {
+            filteredProducts.push(productArray[i]);
+          }
+        }
+
+        // const filteredProducts = productArray.filter((product) =>
+        //   product.title.toLowerCase().includes(inputValue.toLowerCase()),
+        // );
+
+        renderProducts(filteredProducts);
+      });
+
+      const API_URL = 'https://dummyjson.com';
+
+      const loader = (loading) => {
+        if (loading) {
+          spinner.classList.add('active');
+        } else {
+          spinner.classList.remove('active');
+        }
+      };
+
+      const getAllProducts = async () => {
+        loader(true);
+
+        let endpoint = `${API_URL}/products`;
+
+        if (searchInput.value) {
+          endpoint = `${API_URL}/products/search?q=${searchInput.value}`;
+        }
+
+        const response = await fetch(endpoint);
+        const data = await response.json();
+
+        productArray = data.products;
+
+        renderProducts(productArray);
+
+        loader(false);
+      };
+
+      const makeProductEl = (product) => {
+        const prdDiv = `
+            <div class="product">
+                <img class="pb-3" src="${product.thumbnail}" >
+                <h3 class="pb-3"> ${product.title} </h3>
+                <p> $${product.price} </p>
+            </div>
+        `;
+
+        return prdDiv;
+      };
+
+      const renderProducts = (products) => {
+        prdsCon.innerHTML = '';
+
+        products.forEach((product) => {
+          const prdDiv = makeProductEl(product);
+          prdsCon.innerHTML += prdDiv;
+        });
+      };
+
+      searchBtn.addEventListener('click', getAllProducts);
+
+      getAllProducts();
+    </script>
+  </body>
+</html>

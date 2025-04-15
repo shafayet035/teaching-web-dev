@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      #form {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div data-step="0" id="form">
+      <input type="text" name="fullname" placeholder="Name" id="form-input" />
+    </div>
+    <div data-step="1" id="form">
+      <input type="text" name="email" placeholder="Email" id="form-input" />
+    </div>
+    <div data-step="2" id="form">
+      <input type="text" name="password" placeholder="Password" id="form-input" />
+    </div>
+    <button id="nextBtn">next</button>
+
+    <script>
+      const forms = document.querySelectorAll('#form');
+      const btn = document.querySelector('#nextBtn');
+      const inputs = document.querySelectorAll('#form-input');
+
+      let currentStep = 0;
+      let values = {};
+
+      const showCurrentForm = () => {
+        if (currentStep === 2) {
+          btn.textContent = 'Submit';
+        }
+
+        forms.forEach((form) => {
+          console.log(form.dataset);
+          if (Number(form.dataset.step) === currentStep) {
+            form.style.display = 'block';
+          } else {
+            form.style.display = 'none';
+          }
+        });
+      };
+
+      btn.addEventListener('click', () => {
+        if (currentStep === 2) {
+          console.log(values);
+          return;
+        }
+
+        currentStep++;
+        showCurrentForm();
+      });
+
+      inputs.forEach((input) => {
+        input.addEventListener('input', (e) => {
+          values[e.target.name] = e.target.value;
+        });
+      });
+
+      showCurrentForm();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+
+    <style> 
+
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: sans-serif;
+            padding: 6rem;
+        }
+
+        .games {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+
+        }
+        .game {
+            background-color: #fff;
+            padding: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .game img {
+            width: 100%;
+        }
+
+        .filters {
+            padding: 2rem 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+    </style>
+
+</head>
+<body>
+    <h2>Games</h2>
+
+    https://api.domainsdb.info/v1/domains/search?domain=shafayet.pro&limit=50
+
+    <img width="600" src="data:image/gif;base64,R0lGODlhCAAFAPUAAE1WUFVTU1NWUFZYVllbVlpaW1tcWF1cXVxiWl1jWl9mX2NmVWVnXF9eZlxdaGZkYmpmZWRtYGZuY2htZGpsanBsZXVwZXB5Znp+ZXJwaYSAaYiBaYqIbIeAdI2DcYqFcI+FcoiCd5iRcouJgIyKhoyNi4mMjo2RkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAAAAAAALAAAAAAIAAUAAAYlwBLmMmEkCAHTaRTqfB4QEmgj8mgaGY6lsohIHAXKwQBQIAaCIAA7" alt="">
+
+    <div class="filters">
+        <div>
+            <label for="sortBy">Sort by</label>
+            <select name="sortBy" id="sortBy">
+                <option value="release-date">Release Date</option>
+                <option value="popularity">Popularity</option>
+                <option value="alphabetical">Alphabetical</option>
+                <option value="relevance">Relevance</option>
+            </select>
+        </div>
+        <div>
+            <label for="">Platform</label>
+            <select name="platform" id="platform">
+                <option value="all">All</option>
+                <option value="pc">PC</option>  
+                <option value="browser">Browser</option>
+            </select>
+        </div>
+    </div>
+
+    <div id="games" class="games"></div>
+
+    <script>
+        const gamesDiv = document.querySelector("#games");
+        const sortBy = document.querySelector("#sortBy");
+        const platform = document.querySelector("#platform");
+
+        sortBy.addEventListener("change", fethGames)
+        platform.addEventListener("change", fethGames)
+
+        async function fethGames() {
+            const API_URL = `https://www.mmobomb.com/api1/games?sort-by=${sortBy.value}&platform=${platform.value}`;
+
+            try {
+                const response = await fetch(API_URL);
+                const result = await response.json();
+                displayGames(result);
+            } catch (error) {
+                console.error(error);
+            }
+        } 
+
+        function displayGames(games) {
+            gamesDiv.innerHTML = "";
+
+            games.forEach((game) => {
+                const gameDiv = document.createElement("div");
+                gameDiv.classList.add("game");
+                gameDiv.innerHTML = `
+                    <img src="${game.thumbnail}" alt="${game.title}">
+                    <h3>${game.title}</h3>
+                    <p><strong>Genre:</strong> ${game.genre}</p>
+                    <p><strong>Platform:</strong> ${game.platform}</p>
+                    <p><strong>Release Date:</strong> ${game.release_date}</p>
+                    <a href="${game.game_url}" target="_blank">Play Now</a>
+                `;
+                gamesDiv.appendChild(gameDiv);
+            })
+        }
+
+        fethGames();
+     </script>
+
+</body>
+</html>

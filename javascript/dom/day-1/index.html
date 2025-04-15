@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Thik ase</title>
+        <style>
+            * {
+                padding: 0;
+                margin: 0;
+                box-sizing: border-box;
+            }
+            body {
+                min-height: 100vh;
+                display: grid;
+                place-items: center;
+            }
+            #loginForm {
+                max-width: 400px;
+                width: 100%;
+                padding: 20px;
+                border: 1px solid #b1b1b1;
+
+                display: flex;
+                flex-direction: column;
+                align-items: end;
+            }
+            input {
+                width: 100%;
+                padding: 8px;
+                margin: 8px 0;
+            }
+
+            button {
+                background-color: orchid;
+                padding: 6px 20px;
+                border: 1px solid #b1b1b1;
+                cursor: pointer;
+            }
+            #errorMessage {
+                align-self: center;
+                color: red;
+            }
+        </style>
+    </head>
+    <body>
+
+        <form id="loginForm">
+            <span id="errorMessage"></span>
+            <input id="loginEmail" type="email" name="email" placeholder="Enter your email">
+            <input id="loginPassword" type="password" name="password" placeholder="Enter your password">
+            <button type="submit">Submit</button>
+        </form>
+        
+        <script>
+            function getElement(selector){
+                return document.querySelector(selector);
+            }
+
+            let formEl = getElement("#loginForm");
+            let emailEl = getElement('#loginEmail');
+            let passwordEl = getElement('#loginPassword');
+            let errorEl = getElement("#errorMessage");
+
+            let example = document.querySelector('body');
+
+            formEl.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                errorEl.style.color = 'red';
+                
+                if(!emailEl.value) {
+                    errorEl.textContent = 'Please enter email';
+                    return;
+                }
+
+                if(!passwordEl.value) {
+                    errorEl.textContent = 'Please Enter your Password!';
+                    return;
+                }
+
+                errorEl.textContent = 'You are successfully login!';
+                errorEl.style.color = 'green';
+            })
+
+        </script>
+
+    </body>
+</html>

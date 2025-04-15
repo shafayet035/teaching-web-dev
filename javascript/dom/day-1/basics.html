@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Thik ase</title>
+        <style>
+            * {
+                padding: 0;
+                margin: 0;
+                box-sizing: border-box;
+            }
+            .hero {
+                background: linear-gradient(to left, rgba(13, 24, 88, 0.527), rgba(13, 24, 88, 0.527)),
+                    url(https://cdn.dribbble.com/userupload/3665721/file/original-1da5cd11bfa6477ab22d209f7450faea.png?resize=1024x596&vertical=center)
+                        center center/cover no-repeat;
+                min-height: 100vh;
+            }
+
+            .wrapper {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+                justify-items: center;
+                gap: 1rem;
+            }
+
+            .products {
+                border: 1px solid none;
+                box-shadow: 0 5px 5px 0 rgb(112, 112, 112);
+                background: snow;
+                text-align: center;
+                width: 100%;
+                border-radius: 18px;
+            }
+            .products img {
+                width: 100%;
+                border-top-left-radius: 18px;
+                border-top-right-radius: 18px;
+                object-fit: fill;
+            }
+
+            .products .product-title {
+                font: 26px 'sans-serif';
+                font-weight: 400;
+                color: rgb(77, 77, 77);
+            }
+            .products p {
+                color: rgb(77, 77, 77);
+            }
+
+            .products .availability {
+                color: rgb(77, 77, 77);
+                padding-bottom: 1rem;
+            }
+ 
+        </style>
+    </head>
+    <body>
+        <div class="hero">
+            <div class="wrapper" id="productContainer"></div>
+        </div>
+        <script>
+            let products = [
+                {
+                    name: 'Laptop',
+                    price: 999,
+                    stock: 5,
+                    image: 'https://images.unsplash.com/photo-1719937206109-7f4e933230c8?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                },
+                {
+                    name: 'Phone',
+                    price: 699,
+                    stock: 10,
+                    image: 'https://plus.unsplash.com/premium_photo-1723299602204-deac42432f93?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                },
+                {
+                    name: 'Tablet',
+                    price: 499,
+                    stock: 3,
+                    image: 'https://images.unsplash.com/photo-1735852434414-4857abd3eaa0?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                },
+            ];
+
+            let productContainer = document.getElementById('productContainer');
+
+            function generateProduct(product) {
+                let productElement = document.createElement('div');
+
+                let picture = document.createElement('img');
+                let title = document.createElement('h4');
+                let price = document.createElement('p');
+                let availability = document.createElement('span');
+
+                picture.className = 'disp-pic';
+                productElement.className = 'products';
+                title.className = 'product-title';
+                availability.className = 'availability';
+
+                picture.src = product.image;
+                title.textContent = product.name;
+                price.textContent = product.price;
+                availability.textContent = product.stock;
+
+                productElement.appendChild(picture);
+                productElement.appendChild(title);
+                productElement.appendChild(price);
+                productElement.appendChild(availability);
+
+                return productElement;
+            }
+
+            for (let i = 0; i < products.length; i++) {
+                let wwe = generateProduct(products[i]);
+                productContainer.appendChild(wwe);
+            }
+        </script>
+    </body>
+</html>

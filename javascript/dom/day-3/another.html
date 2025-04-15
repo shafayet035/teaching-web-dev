@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>JavaScript Event Handling</h1>
+
+    <input id="ione" type="number">
+    <input id="itwo" type="number">
+    <button id="add">Addition</button>
+    <button id="sub">Substract</button>
+    <button id="mul">Multiply</button>
+    <button id="divi">Divide</button>
+    <p><span id="command"></span><span id="sum"></span></p>
+
+    <script>
+        let ione = document.getElementById('ione');
+        let itwo = document.getElementById('itwo');
+        let btn = document.getElementById('btn');
+        let command = document.getElementById('command')
+        let sum = document.getElementById('sum');
+
+        add.addEventListener('click', function(event) {
+            command.textContent = "Addition: ";
+            sum.textContent = Number(ione.value)+Number(itwo.value);
+        })
+        sub.addEventListener('click', function(event) {
+            command.textContent = "Substraction: ";
+            sum.textContent = Number(ione.value)-Number(itwo.value);
+        })
+        mul.addEventListener('click', function(event) {
+            command.textContent = "Multiplication: ";
+            sum.textContent = Number(ione.value)*Number(itwo.value);
+        })
+        divi.addEventListener('click', function(event) {
+            command.textContent = "Division: ";
+            sum.textContent = Number(ione.value)/Number(itwo.value);
+        })
+    </script>
+
+</body>
+</html>

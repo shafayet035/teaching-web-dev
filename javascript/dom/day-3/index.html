@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        button {
+            display: none;
+        }
+
+        ul {
+            display: block;
+        }
+
+        @media screen and (max-width: 600px) {
+            button {
+                display: block;
+            }
+            ul {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div>logo</div>
+
+        <nav>
+            <button>Icon</button>
+            <ul>
+                <li>Home</li>
+                <li>Home</li>
+                <li>Home</li>
+                <li>Home</li>
+                <li>Home</li>
+            </ul>
+        </nav>
+    </header>
+
+
+    <script>
+        let ul = document.querySelector('ul');
+        let btn = document.querySelector('button');
+
+        btn.addEventListener('click', function(event) {
+            if(ul.style.display === 'block') {
+                ul.style.display = 'none';
+            } else {
+                ul.style.display = 'block';
+            }
+        })
+    </script>
+</body>
+</html>

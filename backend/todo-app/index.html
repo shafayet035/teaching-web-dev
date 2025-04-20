@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Full Stack Todo App</title>
+  </head>
+  <body>
+    <div class="container">
+      <div>
+        <input id="todoInput" type="text" placeholder="Enter todo item" />
+        <button onclick="submitTodo()">Submit</button>
+      </div>
+
+      <div id="todos"></div>
+    </div>
+
+    <script>
+      const API_URI = 'http://localhost:8080';
+
+      async function submitTodo() {
+        const todoValue = document.querySelector('#todoInput').value;
+
+        const response = await fetch(`${API_URI}/todo`, {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+          },
+          body: JSON.stringify({
+            title: todoValue,
+            completed: false,
+          }),
+        });
+
+        const result = await response.json();
+
+        await getAllTodos();
+      }
+
+      async function getAllTodos() {
+        const response = await fetch(`${API_URI}/todos`);
+        const result = await response.json();
+
+        showTodos(result);
+      }
+
+      function showTodos(allTodos) {
+        const todos = document.querySelector('#todos');
+
+        todos.innerHTML = '';
+
+        allTodos.forEach((item) => {
+          const todoDiv = `
+                <div class="todo">
+                    <h4> ${item.title} </h4>
+                    ${
+                      item.completed
+                        ? '<button>Delete</button>'
+                        : `<button 
+                    id="complete-btn"
+                    data-id="${item.id}">Complete</button>`
+                    }
+                </div>
+            `;
+
+          todos.innerHTML += todoDiv;
+        });
+
+        const completeBtns = document.querySelectorAll('#complete-btn');
+
+        completeBtns.forEach((btn) => {
+          btn.addEventListener('click', (e) => {
+            const id = e.target.dataset.id;
+            completeTodo(id);
+          });
+        });
+      }
+
+      async function completeTodo(id) {
+        const response = await fetch(`${API_URI}/todos/${id}`, {
+          method: 'PUT',
+        });
+
+        const result = await response.json();
+
+        await getAllTodos();
+      }
+
+      getAllTodos();
+    </script>
+  </body>
+</html>

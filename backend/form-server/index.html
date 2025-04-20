@@ -42,11 +42,17 @@
         background-color: #f4f4f4;
         padding: 10px;
       }
+
+      .tweet img {
+        width: 100%;
+      }
     </style>
   </head>
   <body>
     <div class="container">
       <div class="form">
+        <label>Image Url</label>
+        <input id="imgInput" type="text" placeholder="Image Url" />
         <label>Title</label>
         <input id="titleInput" type="text" placeholder="title" />
         <label>Description</label>
@@ -63,6 +69,7 @@
       async function submit() {
         const title = document.querySelector('#titleInput').value;
         const desc = document.querySelector('#descInput').value;
+        const img = document.querySelector('#imgInput').value;
 
         const response = await fetch(`${API}/tweet`, {
           method: 'POST',
@@ -72,6 +79,7 @@
           body: JSON.stringify({
             title: title,
             description: desc,
+            img: img,
           }),
         });
 
@@ -89,10 +97,11 @@
 
         result.forEach((tw) => {
           const twDiv = `
-            <div class="tweet"> 
+            <div class="tweet">
+                <img src="${tw.img}" />
                 <h5> ${tw.title} </h5>
                 <p> ${tw.description} </p>
-            </div>  
+            </div>
             `;
           tweetsDiv.innerHTML += twDiv;
         });

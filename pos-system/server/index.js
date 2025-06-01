@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import userTable from './db/user.js';
 
 import AuthService from './services/auth.js';
 
@@ -38,6 +39,14 @@ app.post('/api/login', (req, res) => {
   }
 
   res.status(200).json(user);
+});
+
+app.get('/api/me', (req, res) => {
+  const userId = req.headers['x-user-id'];
+
+  const user = userTable.getUserById(userId);
+
+  return res.status(200).json(user);
 });
 
 app.listen(8000, () => {

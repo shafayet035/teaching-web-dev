@@ -61,9 +61,15 @@ class Auth {
     const data = await response.json();
 
     if (data) {
+      localStorage.setItem('loggedInUser', data.id);
       window.location.href = 'dashboard.html';
     }
   }
+
+  logout() {
+    localStorage.removeItem('loggedInUser');
+    window.location.href = 'login.html';
+  }
 }
 
-export default Auth;
+export default new Auth();

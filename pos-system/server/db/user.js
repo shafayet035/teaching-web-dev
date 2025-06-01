@@ -8,7 +8,12 @@ class UserTable {
   }
 
   getUserByEmail(email) {
-    const user = this.users.find((user) => user.email === email);
+    const user = this.users.find((user) => email === email);
+    return user;
+  }
+
+  getUserById(id) {
+    const user = this.users.find((user) => String(user.id) === id);
     return user;
   }
 

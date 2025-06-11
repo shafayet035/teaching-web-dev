@@ -27,6 +27,10 @@ class Dashboard {
       },
     });
 
+    if (response.status === 404) {
+      window.location.href = 'login.html';
+    }
+
     const data = await response.json();
 
     this.name.textContent = data.name;

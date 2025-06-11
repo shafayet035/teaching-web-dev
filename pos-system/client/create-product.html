@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Product | POS</title>
+    <script defer src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body>
+    <h1 class="text-3xl font-bold py-8 text-center">Create Product</h1>
+    <header class="bg-gray-100 p-4">
+      <nav>
+        <ul class="flex gap-4 justify-center items-center">
+          <li>
+            <a class="hover:text-gray-500" href="dashboard.html">Dashboard</a>
+          </li>
+          <li>
+            <a class="text-blue-500 font-bold" href="products.html">Products</a>
+          </li>
+          <li>
+            <a class="hover:text-gray-500" href="orders.html">Orders</a>
+          </li>
+          <li>
+            <a
+              id="logout-btn"
+              href="login.html"
+              class="text-sm bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
+            >
+              Logout
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="p-8">
+      <div class="flex justify-between items-center mb-8">
+        <h3 class="text-2xl font-bold">Create a Product</h3>
+        <a href="products.html" class="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 cursor-pointer"
+          >Back to Products</a
+        >
+      </div>
+
+      <form id="create-product-form" class="flex flex-col gap-4">
+        <div class="flex flex-col gap-2">
+          <label for="product-name">Product name</label>
+          <input class="border p-2" type="text" id="product-name" name="product-name" />
+        </div>
+        <div class="flex flex-col gap-2">
+          <label for="product-image">Product Image</label>
+          <input class="border p-2" type="text" id="product-image" name="product-image" />
+        </div>
+        <div class="flex flex-col gap-2">
+          <label for="product-price">Product Price</label>
+          <input class="border p-2" type="number" id="product-price" name="product-price" />
+        </div>
+        <div class="flex flex-col gap-2">
+          <label for="product-description">Product description</label>
+          <textarea class="border p-2" type="text" id="product-description" name="product-description"> </textarea>
+        </div>
+        <button type="submit" class="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 cursor-pointer">
+          Create Product
+        </button>
+      </form>
+    </main>
+
+    <script src="js/create-product.js" type="module" defer></script>
+  </body>
+</html>

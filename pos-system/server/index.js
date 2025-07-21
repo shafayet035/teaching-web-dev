@@ -81,6 +81,16 @@ app.post('/api/product', (req, res) => {
   return res.status(201).json(newProduct);
 });
 
+app.delete('/api/product/:id', (req, res) => {
+  const productId = req.params.id;
+
+  productTable.deleteProductById(productId);
+
+  return res.status(200).json({
+    message: 'Product has been deleted',
+  });
+});
+
 app.listen(9000, () => {
   console.log('Server is Running on PORT 9000');
 });

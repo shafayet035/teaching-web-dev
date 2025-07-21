@@ -27,7 +27,7 @@ class Products {
         <h3 class="text-lg font-bold">${product.name}</h3>
         <p class="text-gray-500">${product.description}</p>
         <p class="text-gray-500">${product.price}</p>
-        <button class="bg-red-800 text-xs text-white p-2 rounded-md hover:bg-red-600 cursor-pointer">Remove</button>
+        <button id="remove-btn" data-id="${product.id}" class="bg-red-800 text-xs text-white p-2 rounded-md hover:bg-red-600 cursor-pointer">Remove</button>
       </div>
     `;
   }
@@ -40,6 +40,26 @@ class Products {
 
       this.productsContainer.innerHTML += productTemplate;
     });
+
+    let removeBtns = document.querySelectorAll('#remove-btn');
+
+    removeBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        this.removeProduct(btn.dataset.id);
+      });
+    });
+  }
+
+  async removeProduct(id) {
+    const response = await fetch(`${API_URL}/product/${id}`, {
+      method: 'DELETE',
+    });
+
+    await response.json();
+
+    if (response.ok) {
+      await this.getProducts();
+    }
   }
 }
 
